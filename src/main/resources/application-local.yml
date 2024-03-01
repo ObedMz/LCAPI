@@ -1,0 +1,10 @@
+spring:
+  data:
+    mongodb:
+      database: mydatabase
+      username: root
+      password: secret
+      port: 27017
+    redis:
+      host: localhost
+      port: 6379
