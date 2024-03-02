@@ -6,8 +6,8 @@ import java.time.Instant;
 
 @Data
 public class Login {
-
     private String ip;
-    private Instant instant;
+    private Instant lastConnection;
+    private boolean Logged;
     private String status;
 }

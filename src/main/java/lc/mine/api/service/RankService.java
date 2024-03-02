@@ -1,7 +1,7 @@
 package lc.mine.api.service;
 
 
-import lc.mine.api.entity.Rank;
+import lc.mine.api.entity.rank.Rank;
 import lc.mine.api.repository.RankRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;

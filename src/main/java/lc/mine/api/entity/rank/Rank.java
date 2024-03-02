@@ -1,4 +1,4 @@
-package lc.mine.api.entity;
+package lc.mine.api.entity.rank;
 
 import lombok.Data;
 import org.springframework.data.annotation.Id;

@@ -1,6 +1,6 @@
 package lc.mine.api.repository;
 
-import lc.mine.api.entity.Rank;
+import lc.mine.api.entity.rank.Rank;
 import org.springframework.data.mongodb.repository.MongoRepository;
 import org.springframework.stereotype.Repository;
 

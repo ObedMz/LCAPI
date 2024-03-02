@@ -1,7 +1,7 @@
 package lc.mine.api.controller;
 
 
-import lc.mine.api.entity.Rank;
+import lc.mine.api.entity.rank.Rank;
 import lc.mine.api.service.RankService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;

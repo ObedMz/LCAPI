@@ -13,6 +13,6 @@ public class PunishmentHistory {
     @Id
     private UUID player;
 
-    private List<Punishment> punishments;
+    private List<Punishment> punishmentList;
 
 }
