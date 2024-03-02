@@ -48,7 +48,7 @@ jobs:
           panel-host: ${{ secrets.PANEL_HOST }}
           api-key: ${{ secrets.API_KEY }}
           server-id: "90aeea3b"
-          source: "LCAPI/*.jar"
+          source: "*.jar"
           target: "./"
           restart: true
 
