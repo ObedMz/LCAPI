@@ -22,7 +22,7 @@ public class Player {
     private int coins;
     private int vipPoints;
     @DBRef
-    private RankInfo rank;
+    private RankInfo rankInfo;
     @DBRef
     private Login authInfo;
     @BsonIgnore

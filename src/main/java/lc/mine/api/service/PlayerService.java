@@ -2,6 +2,7 @@ package lc.mine.api.service;
 
 
 import lc.mine.api.entity.Player;
+import lc.mine.api.entity.rank.RankInfo;
 import lc.mine.api.repository.PlayerRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -22,7 +23,10 @@ public class PlayerService {
     public Player savePlayer(Player player) {
         if (player.getUuid() == null) {
             player.setUuid(UUID.randomUUID());
-            player.setRank(rankService.getDefaultRank());
+            RankInfo rankInfo = new RankInfo();
+            rankInfo.setRank(rankService.getDefaultRank());
+
+            player.setRankInfo(rankInfo);
         }
         if (findByUsername(player.getUsername()).isPresent()) {
             return null;

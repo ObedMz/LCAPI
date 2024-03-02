@@ -22,8 +22,8 @@ public class PunishmentService {
             punishmentHistory = new PunishmentHistory();
             punishmentHistory.setPlayer(playerId);
         }
-        punishmentHistory.getPunishments().add(punishment);
-        return punishmentHistoryRepository.save(punishmentHistory).getPunishments().get(punishmentHistory.getPunishments().size() - 1);
+        punishmentHistory.getPunishmentList().add(punishment);
+        return punishmentHistoryRepository.save(punishmentHistory).getPunishmentList().get(punishmentHistory.getPunishmentList().size() - 1);
 
     }
     public PunishmentHistory findByPlayer(UUID uuid) {
