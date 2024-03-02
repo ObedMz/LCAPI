@@ -7,6 +7,8 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.List;
+
 @RestController
 public class RankController {
 
@@ -17,6 +19,11 @@ public class RankController {
     @PostMapping("/v1/rank")
     public ResponseEntity<Rank> saveRank(@RequestBody Rank rank) {
         return ResponseEntity.ok(rankService.saveRank(rank));
+    }
+
+    @GetMapping("/v1/ranks")
+    public ResponseEntity<List<Rank>> getRanks() {
+        return ResponseEntity.ok(rankService.findAllRanks());
     }
 
     @GetMapping("/v1/rank/{name}")

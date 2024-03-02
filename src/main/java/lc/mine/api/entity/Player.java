@@ -10,7 +10,7 @@ import org.springframework.data.mongodb.core.mapping.DBRef;
 import java.util.UUID;
 
 @Data
-public class Player {
+public class    Player {
 
     @Id
     private UUID uuid;

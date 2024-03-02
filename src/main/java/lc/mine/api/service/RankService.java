@@ -6,6 +6,7 @@ import lc.mine.api.repository.RankRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.util.List;
 import java.util.UUID;
 
 @Service
@@ -30,7 +31,7 @@ public class RankService {
         Rank rank = findByName(name);
         rankRepository.delete(rank);
     }
-
+    public List<Rank> findAllRanks() { return rankRepository.findAll();}
 
     public Rank getDefaultRank() {
         return rankRepository.findRankByDefaultRank(true);
