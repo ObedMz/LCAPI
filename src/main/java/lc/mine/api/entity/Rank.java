@@ -17,7 +17,6 @@ public class Rank {
     private String color;
     private Integer priority;
     private Boolean defaultRank;
-    private String asd;
     private Set<String> permissions;
 
 
