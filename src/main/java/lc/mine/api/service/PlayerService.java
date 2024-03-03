@@ -5,6 +5,9 @@ import lc.mine.api.entity.Player;
 import lc.mine.api.entity.rank.RankInfo;
 import lc.mine.api.repository.PlayerRepository;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Pageable;
+import org.springframework.data.domain.Slice;
 import org.springframework.stereotype.Service;
 
 import java.util.Optional;
@@ -33,7 +36,10 @@ public class PlayerService {
         }
         return playerRepository.save(player);
     }
-
+    public Slice<Player> getAllPlayers(Integer amount) {
+        Pageable pageable = PageRequest.of(0, amount != null ? amount : Integer.MAX_VALUE);
+        return playerRepository.findAll(pageable);
+    }
     public Player findById(UUID id) {
         return playerRepository.findById(id).orElse(null);
     }

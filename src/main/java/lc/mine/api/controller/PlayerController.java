@@ -6,6 +6,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.List;
 import java.util.UUID;
 
 @RestController
@@ -18,6 +19,10 @@ public class PlayerController {
     @PostMapping("/v1/player")
     public ResponseEntity<Player> createPlayer(@RequestBody Player player) {
         return ResponseEntity.ok(playerService.savePlayer(player));
+    }
+    @GetMapping("/v1/players")
+    public ResponseEntity<List<Player>> getAllPlayers(@RequestParam(required = false) Integer amount) {
+        return ResponseEntity.ok(playerService.getAllPlayers(amount).getContent());
     }
 
     @GetMapping("/v1/player/{username}")
