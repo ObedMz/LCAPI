@@ -21,7 +21,6 @@ public class Player {
     private String password;
     private int coins;
     private int vipPoints;
-    @DBRef
     private RankInfo rankInfo;
     @DBRef
     private Login authInfo;
