@@ -31,9 +31,6 @@ public class PlayerService {
 
             player.setRankInfo(rankInfo);
         }
-        if (findByUsername(player.getUsername()).isPresent()) {
-            return null;
-        }
         return playerRepository.save(player);
     }
     public Slice<Player> getAllPlayers(Integer amount) {
