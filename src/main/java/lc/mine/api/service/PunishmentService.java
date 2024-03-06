@@ -42,7 +42,7 @@ public class PunishmentService {
         }
         System.out.println("===========");
         System.out.println(list);
-        return punishmentHistoryRepository.findAll();
+        return list;
     }
 
     public List<PunishmentHistory> findActivePunishmentsByIP(String ip) {
