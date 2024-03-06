@@ -16,7 +16,7 @@ public interface PunishmentHistoryRepository extends MongoRepository<PunishmentH
     @Query("{ 'player' : ?0, 'punishments.active' : true }")
     PunishmentHistory findActivePunishmentsForPlayer(UUID playerId);
 
-    @Query("{ 'punishmentList.ip' : ?0 }")
+    @Query("{ 'punishmentList.ip' : ?0, 'punishmentList.active' : true }")
     List<PunishmentHistory> findByIp(String ip);
 
     PunishmentHistory findByPlayer(UUID uuid);
