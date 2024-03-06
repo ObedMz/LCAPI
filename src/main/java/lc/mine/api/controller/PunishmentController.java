@@ -21,6 +21,11 @@ public class PunishmentController {
         return ResponseEntity.ok(punishmentService.savePunishment(punishment, playerId));
     }
 
+    @GetMapping("/v1/punishment/history")
+    public ResponseEntity<List<PunishmentHistory>> findActivePunishments(@RequestParam String ip) {
+        return ResponseEntity.ok(punishmentService.findActivePunishmentsByIP(ip));
+    }
+
     @GetMapping("/v1/punishment/{playerId}/history")
     public ResponseEntity<PunishmentHistory> findActivePunishmentsForPlayer(@PathVariable UUID playerId, @RequestParam(required = false) boolean active) {
         if (active) {

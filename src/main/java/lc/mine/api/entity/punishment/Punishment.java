@@ -20,6 +20,9 @@ public class Punishment {
     private Boolean active;
 
     private Boolean permanent;
+
+    private String ip;
+    private Boolean isIP;
     private PunishmentType type;
 
 

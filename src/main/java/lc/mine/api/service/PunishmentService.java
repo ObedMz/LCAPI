@@ -38,4 +38,7 @@ public class PunishmentService {
         return punishmentHistoryRepository.findActivePunishments();
     }
 
+    public List<PunishmentHistory> findActivePunishmentsByIP(String ip) {
+        return punishmentHistoryRepository.findByIp(ip);
+    }
 }
