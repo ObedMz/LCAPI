@@ -2,6 +2,7 @@ package lc.mine.api.service;
 
 
 import lc.mine.api.entity.Player;
+import lc.mine.api.entity.punishment.Punishment;
 import lc.mine.api.entity.rank.RankInfo;
 import lc.mine.api.repository.PlayerRepository;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -13,6 +14,7 @@ import org.springframework.stereotype.Service;
 import java.util.Optional;
 import java.util.UUID;
 
+
 @Service
 public class PlayerService {
 
@@ -22,13 +24,15 @@ public class PlayerService {
     @Autowired
     private RankService rankService;
 
+    @Autowired
+    private PunishmentService punishmentService;
+
 
     public Player savePlayer(Player player) {
         if (player.getUuid() == null) {
             player.setUuid(UUID.randomUUID());
             RankInfo rankInfo = new RankInfo();
             rankInfo.setRank(rankService.getDefaultRank());
-
             player.setRankInfo(rankInfo);
         }
         return playerRepository.save(player);
@@ -42,7 +46,9 @@ public class PlayerService {
     }
 
     public Optional<Player> findByUsername(String username) {
-        return playerRepository.findByUsername(username);
+        Optional<Player> p = playerRepository.findByUsername(username);
+        p.ifPresent(player -> player.setActivePunishment(punishmentService.findActivePunishmentsForPlayer(player.getUuid())));
+        return p;
     }
 
     public void deletePlayer(UUID id) {

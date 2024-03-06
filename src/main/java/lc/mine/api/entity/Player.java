@@ -3,6 +3,7 @@ package lc.mine.api.entity;
 
 import lc.mine.api.entity.auth.Login;
 import lc.mine.api.entity.punishment.Punishment;
+import lc.mine.api.entity.punishment.PunishmentHistory;
 import lc.mine.api.entity.rank.Rank;
 import lc.mine.api.entity.rank.RankInfo;
 import lombok.Data;
@@ -25,7 +26,8 @@ public class Player {
     @DBRef
     private Login authInfo;
     @BsonIgnore
-    private Punishment activePunishment;
+    private PunishmentHistory activePunishment;
+
 
 
 }
