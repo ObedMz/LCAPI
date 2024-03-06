@@ -7,6 +7,7 @@ import lc.mine.api.repository.PunishmentHistoryRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.util.ArrayList;
 import java.util.List;
 import java.util.UUID;
 
@@ -38,7 +39,14 @@ public class PunishmentService {
         return punishmentHistoryRepository.findActivePunishments();
     }
 
-    public List<PunishmentHistory> findActivePunishmentsByIP(String ip) {
-        return punishmentHistoryRepository.findByIp(ip);
+    public List<Punishment> findActivePunishmentsByIP(String ip) {
+        List<Punishment> punishments = new ArrayList<>();
+        punishmentHistoryRepository.findByIp(ip).forEach(l -> {
+            l.getPunishmentList().forEach(p -> {
+                if(p.getIsIP() && p.getActive())
+                    punishments.add(p);
+            });
+        });
+        return punishments;
     }
 }
