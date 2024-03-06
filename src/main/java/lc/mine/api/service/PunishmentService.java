@@ -40,7 +40,9 @@ public class PunishmentService {
         for (PunishmentHistory punishmentHistory : list) {
             punishmentHistory.getPunishmentList().removeIf(item -> !item.getActive());
         }
-        return list;
+        System.out.println("===========");
+        System.out.println(list);
+        return punishmentHistoryRepository.findAll();
     }
 
     public List<PunishmentHistory> findActivePunishmentsByIP(String ip) {
