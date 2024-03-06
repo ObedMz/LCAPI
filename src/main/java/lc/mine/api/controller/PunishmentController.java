@@ -21,7 +21,7 @@ public class PunishmentController {
         return ResponseEntity.ok(punishmentService.savePunishment(punishment, playerId));
     }
 
-    @GetMapping("/v1/punishment/history")
+    @GetMapping("/v1/punishment/ip/history")
     public ResponseEntity<List<PunishmentHistory>> findActivePunishments(@RequestParam String ip) {
         return ResponseEntity.ok(punishmentService.findActivePunishmentsByIP(ip));
     }
@@ -35,7 +35,7 @@ public class PunishmentController {
         }
     }
 
-    @GetMapping("/v1/punishment/history")
+    @GetMapping("/v1/punishment/history/all")
     public ResponseEntity<List<PunishmentHistory>> findActivePunishments() {
         return ResponseEntity.ok(punishmentService.findActivePunishments());
     }
