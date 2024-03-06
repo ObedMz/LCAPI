@@ -20,6 +20,10 @@ public class PunishmentController {
     public ResponseEntity<Punishment> savePunishment(@RequestBody Punishment punishment, @PathVariable UUID playerId) {
         return ResponseEntity.ok(punishmentService.savePunishment(punishment, playerId));
     }
+    @PostMapping("/v1/punishments/{playerId}")
+    public ResponseEntity<List<Punishment>> savePunishment(@RequestBody List<Punishment> punishment, @PathVariable UUID playerId) {
+        return ResponseEntity.ok(punishmentService.savePunishmentList(punishment, playerId));
+    }
 
     @GetMapping("/v1/punishment/ip/history")
     public ResponseEntity<List<PunishmentHistory>> findActivePunishments(@RequestParam String ip) {
