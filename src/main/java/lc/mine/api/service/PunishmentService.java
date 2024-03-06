@@ -36,12 +36,8 @@ public class PunishmentService {
 
     public List<PunishmentHistory> findActivePunishments() {
         List<PunishmentHistory> list = punishmentHistoryRepository.findAll();
-        System.out.println(list);
-        for (PunishmentHistory punishmentHistory : list) {
+        for (PunishmentHistory punishmentHistory : list)
             punishmentHistory.getPunishmentList().removeIf(item -> !item.getActive());
-        }
-        System.out.println("===========");
-        System.out.println(list);
         return list;
     }
 
