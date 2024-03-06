@@ -35,11 +35,15 @@ public class PunishmentService {
     }
 
     public List<PunishmentHistory> findActivePunishments() {
-        return punishmentHistoryRepository.findActivePunishments();
+        List<PunishmentHistory> list = punishmentHistoryRepository.findAll();
+        System.out.println(list);
+        for (PunishmentHistory punishmentHistory : list) {
+            punishmentHistory.getPunishmentList().removeIf(item -> !item.getActive());
+        }
+        return list;
     }
 
     public List<PunishmentHistory> findActivePunishmentsByIP(String ip) {
-
         return punishmentHistoryRepository.findByIp(ip);
     }
 }
