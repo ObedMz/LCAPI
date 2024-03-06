@@ -19,6 +19,7 @@ public class Punishment {
 
     private Boolean active;
 
+    private Boolean permanent;
     private PunishmentType type;
 
 

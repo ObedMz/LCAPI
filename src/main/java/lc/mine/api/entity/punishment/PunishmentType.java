@@ -3,6 +3,7 @@ package lc.mine.api.entity.punishment;
 public enum PunishmentType {
 
     BAN,
+    BANIP,
     MUTE,
     KICK,
     WARN;
