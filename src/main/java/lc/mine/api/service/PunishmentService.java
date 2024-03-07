@@ -7,6 +7,8 @@ import lc.mine.api.repository.PunishmentHistoryRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.time.Instant;
+import java.util.ArrayList;
 import java.util.List;
 import java.util.UUID;
 
@@ -53,7 +55,44 @@ public class PunishmentService {
         return list;
     }
 
-    public List<PunishmentHistory> findActivePunishmentsByIP(String ip) {
-        return punishmentHistoryRepository.findByIp(ip);
+    public List<PunishmentHistory> findAll() {
+        return punishmentHistoryRepository.findAll();
+    }
+
+    public List<PunishmentHistory> findAllPunishmentsForIP(String ip) {
+        List<PunishmentHistory> punishmentHistories = new ArrayList<>();
+        for(PunishmentHistory punishmentHistory : findAll()){
+            for(Punishment punishment : punishmentHistory.getPunishmentList()){
+                if(punishment.getIp().equals(ip)){
+                    punishmentHistories.add(punishmentHistory);
+                    break;
+                }
+            }
+        }
+        return punishmentHistories;
+    }
+
+    public Punishment findActivePunishmentForIP(String ip) {
+        List<PunishmentHistory> allPunish = findAllPunishmentsForIP(ip);
+
+        for (PunishmentHistory punish : allPunish) {
+            for (Punishment punishment : punish.getPunishmentList()) {
+                    if(!punishment.getActive()){
+                        continue;
+                    }
+                    if(!isExpired(punishment.getExpiresInstant())){
+                        return punishment;
+                    }
+            }
+
+        }
+        return null;
+    }
+    private Boolean isExpired(Instant time){
+        Instant currentInstant = Instant.now();
+        if(time == null)
+            return false;
+        return currentInstant.isAfter(time);
+
     }
 }

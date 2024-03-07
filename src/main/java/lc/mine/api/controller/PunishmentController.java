@@ -25,11 +25,6 @@ public class PunishmentController {
         return ResponseEntity.ok(punishmentService.savePunishmentList(punishment, playerId));
     }
 
-    @GetMapping("/v1/punishment/ip/history")
-    public ResponseEntity<List<PunishmentHistory>> findActivePunishments(@RequestParam String ip) {
-        return ResponseEntity.ok(punishmentService.findActivePunishmentsByIP(ip));
-    }
-
     @GetMapping("/v1/punishment/{playerId}/history")
     public ResponseEntity<PunishmentHistory> findActivePunishmentsForPlayer(@PathVariable UUID playerId, @RequestParam(required = false) boolean active) {
         if (active) {
@@ -39,9 +34,35 @@ public class PunishmentController {
         }
     }
 
-    @GetMapping("/v1/punishment/history/all")
+    @GetMapping("/v1/punishments")
+    public ResponseEntity<List<PunishmentHistory>> findAllPunishments() {
+        return ResponseEntity.ok(punishmentService.findAll());
+    }
+
+    @GetMapping("/v1/punishments/active")
     public ResponseEntity<List<PunishmentHistory>> findActivePunishments() {
         return ResponseEntity.ok(punishmentService.findActivePunishments());
     }
+
+    @GetMapping("/v1/punishments/player/{playerId}")
+    public ResponseEntity<PunishmentHistory> getAllPunishmentByPlayer(@PathVariable UUID playerId) {
+        return ResponseEntity.ok(punishmentService.findByPlayer(playerId));
+    }
+
+    @GetMapping("/v1/punishments/player/{playerId}/active")
+    public ResponseEntity<PunishmentHistory> getActivePunishmentByPlayer(@PathVariable UUID playerId) {
+        return ResponseEntity.ok(punishmentService.findActivePunishmentsForPlayer(playerId));
+    }
+
+    @GetMapping("/v1/punishments/ip/{ip}")
+    public ResponseEntity<List<PunishmentHistory>> getAllPunishmentByIP(@PathVariable String ip) {
+        return ResponseEntity.ok(punishmentService.findAllPunishmentsForIP(ip));
+    }
+
+    @GetMapping("/v1/punishments/ip/{ip}/active")
+    public ResponseEntity<Punishment> getActivePunishmentByIP(@PathVariable String ip) {
+        return ResponseEntity.ok(punishmentService.findActivePunishmentForIP(ip));
+    }
+
 
 }
