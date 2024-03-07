@@ -78,9 +78,12 @@ public class PunishmentService {
         for (PunishmentHistory punish : allPunish) {
             for (Punishment punishment : punish.getPunishmentList()) {
                     if(!punishment.getActive()){
+                        System.out.println("saltando punishment");
                         continue;
                     }
                     if(!isExpired(punishment.getExpiresInstant())){
+                        System.out.println("retornando" + punishment);
+
                         return punishment;
                     }
             }
