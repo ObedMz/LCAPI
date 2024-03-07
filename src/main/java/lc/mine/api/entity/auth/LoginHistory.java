@@ -14,5 +14,5 @@ public class LoginHistory {
     @Id
     private UUID player;
 
-    private List<Login> logins;
+    private List<Auth> auths;
 }

@@ -5,7 +5,7 @@ import lombok.Data;
 import java.time.Instant;
 
 @Data
-public class Login {
+public class Auth {
     private String ip;
     private Instant lastConnection;
     private boolean Logged;

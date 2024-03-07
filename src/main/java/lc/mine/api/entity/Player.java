@@ -1,10 +1,8 @@
 package lc.mine.api.entity;
 
 
-import lc.mine.api.entity.auth.Login;
-import lc.mine.api.entity.punishment.Punishment;
+import lc.mine.api.entity.auth.Auth;
 import lc.mine.api.entity.punishment.PunishmentHistory;
-import lc.mine.api.entity.rank.Rank;
 import lc.mine.api.entity.rank.RankInfo;
 import lombok.Data;
 import org.bson.codecs.pojo.annotations.BsonIgnore;
@@ -24,7 +22,7 @@ public class Player {
     private int vipPoints;
     private RankInfo rankInfo;
     @DBRef
-    private Login authInfo;
+    private Auth authInfo;
     @BsonIgnore
     private PunishmentHistory activePunishment;
 
