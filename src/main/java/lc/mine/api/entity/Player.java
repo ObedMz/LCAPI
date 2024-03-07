@@ -21,7 +21,7 @@ public class Player {
     private int coins;
     private int vipPoints;
     private RankInfo rankInfo;
-    @DBRef
+
     private Auth authInfo;
     @BsonIgnore
     private PunishmentHistory activePunishment;
