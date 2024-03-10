@@ -2,7 +2,6 @@ package lc.mine.api.service;
 
 
 import lc.mine.api.entity.punishment.Punishment;
-import lc.mine.api.entity.punishment.PunishmentHistory;
 import lc.mine.api.repository.PunishmentHistoryRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -18,84 +17,82 @@ public class PunishmentService {
     @Autowired
     private PunishmentHistoryRepository punishmentHistoryRepository;
 
-    public Punishment savePunishment(Punishment punishment, UUID playerId) {
-        PunishmentHistory punishmentHistory = punishmentHistoryRepository.findByPlayer(playerId);
-        if (punishmentHistory == null) {
-            punishmentHistory = new PunishmentHistory();
-            punishmentHistory.setPlayer(playerId);
-        }
-        punishmentHistory.getPunishmentList().add(punishment);
-        return punishmentHistoryRepository.save(punishmentHistory).getPunishmentList().get(punishmentHistory.getPunishmentList().size() - 1);
-
+    public Punishment savePunishment(Punishment punishment) {
+        return punishmentHistoryRepository.save(punishment);
     }
-    public List<Punishment> savePunishmentList(List<Punishment> punishment, UUID playerId) {
-        PunishmentHistory punishmentHistory = punishmentHistoryRepository.findByPlayer(playerId);
-        if (punishmentHistory == null) {
-            punishmentHistory = new PunishmentHistory();
-            punishmentHistory.setPlayer(playerId);
-        }
-        punishmentHistory.setPunishmentList(punishment);
-        return punishmentHistoryRepository.save(punishmentHistory).getPunishmentList();
-
+    public List<Punishment> savePunishmentList(List<Punishment> punishments) {
+        return punishmentHistoryRepository.saveAll(punishments);
     }
 
 
-    public PunishmentHistory findByPlayer(UUID uuid) {
+    public List<Punishment> findByPlayer(UUID uuid) {
         return punishmentHistoryRepository.findByPlayer(uuid);
     }
 
-    public PunishmentHistory findActivePunishmentsForPlayer(UUID playerId) {
-        return punishmentHistoryRepository.findActivePunishmentsForPlayer(playerId);
+    public List<Punishment> findActivePunishmentsForPlayer(UUID playerId) {
+        List<Punishment> punishments = new ArrayList<>();
+        List<Punishment> to_save = punishmentHistoryRepository.findActiveByPlayer(playerId);
+
+        for(Punishment p : to_save){
+            p.setActive(!isExpired(p.getExpiresInstant()));
+            if(p.getActive()) punishments.add(p);
+        }
+        savePunishmentList(to_save);
+        return punishments;
     }
 
-    public List<PunishmentHistory> findActivePunishments() {
-        List<PunishmentHistory> list = punishmentHistoryRepository.findAll();
-        for (PunishmentHistory punishmentHistory : list)
-            punishmentHistory.getPunishmentList().removeIf(item -> !item.getActive());
-        return list;
+    public List<Punishment> findActivePunishments() {
+        List<Punishment> punishments = new ArrayList<>();
+        List<Punishment> to_save = punishmentHistoryRepository.findActivePunishments();
+
+        for(Punishment p : to_save){
+            p.setActive(!isExpired(p.getExpiresInstant()));
+            if(p.getActive()) punishments.add(p);
+        }
+        savePunishmentList(to_save);
+        return punishments;
     }
 
-    public List<PunishmentHistory> findAll() {
+    public List<Punishment> findAll() {
         return punishmentHistoryRepository.findAll();
     }
 
-    public List<PunishmentHistory> findAllPunishmentsForIP(String ip) {
-        List<PunishmentHistory> punishmentHistories = new ArrayList<>();
-        for(PunishmentHistory punishmentHistory : findAll()){
-            for(Punishment punishment : punishmentHistory.getPunishmentList()){
-                if(punishment.getIp().equals(ip)){
-                    punishmentHistories.add(punishmentHistory);
-                    break;
-                }
-            }
-        }
-        return punishmentHistories;
+    public List<Punishment> findByIp(String ip) {
+        return punishmentHistoryRepository.findByIp(ip);
     }
 
-    public Punishment findActivePunishmentForIP(String ip) {
-        List<PunishmentHistory> allPunish = findAllPunishmentsForIP(ip);
+    public List<Punishment> findActivePunishmentForIP(String ip) {
+        List<Punishment> punishments = new ArrayList<>();
+        List<Punishment> to_save = punishmentHistoryRepository.findActiveByIP(ip);
 
-        for (PunishmentHistory punish : allPunish) {
-            for (Punishment punishment : punish.getPunishmentList()) {
-                    if(!punishment.getActive()){
-                        System.out.println("saltando punishment");
-                        continue;
-                    }
-                    if(!isExpired(punishment.getExpiresInstant())){
-                        System.out.println("retornando" + punishment);
-
-                        return punishment;
-                    }
-            }
-
+        for(Punishment p : to_save){
+            p.setActive(!isExpired(p.getExpiresInstant()));
+            if(p.getActive()) punishments.add(p);
         }
-        return null;
+        savePunishmentList(to_save);
+        return punishments;
+    }
+
+    public Punishment findLastByPlayer(UUID player){
+        Punishment punishment = punishmentHistoryRepository.findActiveByPlayer(player).stream().findFirst().orElse(null);
+        if(punishment != null && isExpired(punishment.getExpiresInstant())){
+            punishment.setActive(false);
+            savePunishment(punishment);
+            return null;
+        }
+        return punishment;
+    }
+
+    public Punishment findLastByIP(String ip){
+        Punishment punishment = punishmentHistoryRepository.findActiveByIP(ip).stream().findFirst().orElse(null);
+        if(punishment != null && isExpired(punishment.getExpiresInstant())){
+            punishment.setActive(false);
+            savePunishment(punishment);
+           return null;
+        }
+        return punishment;
     }
     private Boolean isExpired(Instant time){
-        Instant currentInstant = Instant.now();
-        if(time == null)
-            return false;
-        return currentInstant.isAfter(time);
-
+        return time != null && Instant.now().isAfter(time);
     }
 }

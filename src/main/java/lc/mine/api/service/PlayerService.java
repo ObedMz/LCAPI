@@ -47,7 +47,7 @@ public class PlayerService {
 
     public Optional<Player> findByUsername(String username) {
         Optional<Player> p = playerRepository.findByUsername(username);
-        p.ifPresent(player -> player.setActivePunishment(punishmentService.findActivePunishmentsForPlayer(player.getUuid())));
+        p.ifPresent(player -> player.setPunishmentList(punishmentService.findActivePunishmentsForPlayer(player.getUuid())));
         return p;
     }
 

@@ -2,6 +2,7 @@ package lc.mine.api.entity;
 
 
 import lc.mine.api.entity.auth.Auth;
+import lc.mine.api.entity.punishment.Punishment;
 import lc.mine.api.entity.punishment.PunishmentHistory;
 import lc.mine.api.entity.rank.RankInfo;
 import lombok.Data;
@@ -9,6 +10,8 @@ import org.bson.codecs.pojo.annotations.BsonIgnore;
 import org.springframework.data.annotation.Id;
 import org.springframework.data.mongodb.core.mapping.DBRef;
 
+import java.util.ArrayList;
+import java.util.List;
 import java.util.UUID;
 
 @Data
@@ -24,8 +27,8 @@ public class Player {
 
     private Auth authInfo;
     @BsonIgnore
+    private List<Punishment> punishmentList = new ArrayList<>();
+    @BsonIgnore
     private PunishmentHistory activePunishment;
-
-
 
 }
