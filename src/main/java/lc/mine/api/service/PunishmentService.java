@@ -46,10 +46,13 @@ public class PunishmentService {
         List<Punishment> to_save = punishmentHistoryRepository.findActivePunishments();
 
         for(Punishment p : to_save){
-            p.setActive(!isExpired(p.getExpiresInstant()));
+            if(isExpired(p.getExpiresInstant())){
+                System.out.println("El rango expiró.");
+                p.setActive(false);
+                savePunishment(p);
+            }
             if(p.getActive()) punishments.add(p);
         }
-        savePunishmentList(to_save);
         return punishments;
     }
 
