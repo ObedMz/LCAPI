@@ -18,10 +18,14 @@ public class PunishmentService {
     private PunishmentHistoryRepository punishmentHistoryRepository;
 
     public Punishment savePunishment(Punishment punishment) {
+        if (punishment.getId() == null)
+            punishment.setId(UUID.randomUUID());
         return punishmentHistoryRepository.save(punishment);
     }
     public List<Punishment> savePunishmentList(List<Punishment> punishments) {
-        return punishmentHistoryRepository.saveAll(punishments);
+        for(Punishment p : punishments)
+            punishmentHistoryRepository.save(p);
+        return punishments;
     }
 
 
