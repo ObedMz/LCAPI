@@ -73,7 +73,7 @@ public class PunishmentService {
         List<Punishment> to_save = punishmentHistoryRepository.findActiveByIP(ip);
 
         for(Punishment p : to_save){
-            p.setActive(!isExpired(p.getExpiresInstant()));
+            if(!p.getPermanent()) p.setActive(!isExpired(p.getExpiresInstant()));
             if(p.getActive()) punishments.add(p);
         }
         savePunishmentList(to_save);
