@@ -38,7 +38,7 @@ public class PunishmentService {
         List<Punishment> to_save = punishmentHistoryRepository.findActiveByPlayer(playerId);
 
         for(Punishment p : to_save){
-            p.setActive(!isExpired(p.getExpiresInstant()));
+            if(!p.getPermanent()) p.setActive(!isExpired(p.getExpiresInstant()));
             if(p.getActive()) punishments.add(p);
         }
         savePunishmentList(to_save);
@@ -50,10 +50,11 @@ public class PunishmentService {
         List<Punishment> to_save = punishmentHistoryRepository.findActivePunishments();
 
         for(Punishment p : to_save){
-            if(isExpired(p.getExpiresInstant())){
-                System.out.println("El rango expiró.");
-                p.setActive(false);
-                savePunishment(p);
+            if(!p.getPermanent()){
+                if(isExpired(p.getExpiresInstant())){
+                    p.setActive(false);
+                    savePunishment(p);
+                }
             }
             if(p.getActive()) punishments.add(p);
         }
