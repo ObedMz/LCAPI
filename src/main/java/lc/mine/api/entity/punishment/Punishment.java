@@ -10,7 +10,7 @@ import java.util.UUID;
 public class Punishment {
     @Id
     private UUID id;
-    private UUID punisher;
+    private String punisher;
 
     private String reason;
 
