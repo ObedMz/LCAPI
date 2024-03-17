@@ -33,6 +33,9 @@ public class PlayerService {
             player.setUuid(UUID.randomUUID());
             RankInfo rankInfo = new RankInfo();
             rankInfo.setRank(rankService.getDefaultRank());
+            rankInfo.setHide(false);
+            rankInfo.setPermanent(true);
+            rankInfo.setUserColor("&7");
             player.setRankInfo(rankInfo);
         }
         return playerRepository.save(player);
